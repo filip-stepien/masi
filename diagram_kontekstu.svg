@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="420" viewBox="0 0 1000 420">
+  <rect width="1000" height="420" fill="#ffffff"/>
+  <rect x="380" y="110" width="240" height="200" fill="#d9d9d9" stroke="#5a5a5a" stroke-width="2"/>
+  <text x="500" y="205" text-anchor="middle" font-family="Arial, sans-serif" font-size="28" fill="#222222">System</text>
+  <text x="500" y="238" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" fill="#222222">rekrutacyjny HR</text>
+
+  <text x="120" y="125" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" fill="#222222">Kandydat</text>
+  <line x1="205" y1="118" x2="380" y2="118" stroke="#444444" stroke-width="2"/>
+
+  <text x="120" y="210" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" fill="#222222">Rekruter</text>
+  <line x1="205" y1="203" x2="380" y2="203" stroke="#444444" stroke-width="2"/>
+
+  <text x="120" y="295" text-anchor="middle" font-family="Arial, sans-serif" font-size="24" fill="#222222">Klient</text>
+  <line x1="205" y1="288" x2="380" y2="288" stroke="#444444" stroke-width="2"/>
+
+  <line x1="620" y1="118" x2="800" y2="118" stroke="#444444" stroke-width="2"/>
+  <text x="885" y="125" text-anchor="middle" font-family="Arial, sans-serif" font-size="23" fill="#222222">Google Calendar API</text>
+
+  <line x1="620" y1="203" x2="800" y2="203" stroke="#444444" stroke-width="2"/>
+  <text x="885" y="210" text-anchor="middle" font-family="Arial, sans-serif" font-size="23" fill="#222222">CRM firmy HR</text>
+
+  <line x1="620" y1="288" x2="800" y2="288" stroke="#444444" stroke-width="2"/>
+  <text x="885" y="295" text-anchor="middle" font-family="Arial, sans-serif" font-size="23" fill="#222222">System poczty e-mail</text>
+</svg>

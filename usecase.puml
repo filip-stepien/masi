@@ -1,0 +1,36 @@
+@startuml
+left to right direction
+
+actor Kandydat
+actor Rekruter
+actor Klient
+
+usecase "Złożenie aplikacji\nna ofertę" as UC1
+usecase "Potwierdzenie terminu\nrozmowy" as UC2
+usecase "Rejestracja / aktualizacja\noferty rekrutacyjnej" as UC3
+usecase "Analiza i ranking CV\nz użyciem AI" as UC4
+usecase "Utworzenie listy\nkandydatów" as UC5
+usecase "Zaplanowanie rozmowy\nkwalifikacyjnej" as UC6
+usecase "Przegląd listy\nkandydatów" as UC7
+usecase "Przekazanie informacji\nzwrotnej" as UC8
+usecase "Synchronizacja\nz kalendarzem" as UC9
+usecase "Wysłanie\npowiadomień" as UC10
+
+Kandydat --> UC1
+Kandydat --> UC2
+
+Rekruter --> UC3
+Rekruter --> UC4
+Rekruter --> UC5
+Rekruter --> UC6
+
+Klient --> UC2
+Klient --> UC7
+Klient --> UC8
+
+UC5 .> UC4 : <<include>>
+UC8 .> UC7 : <<include>>
+UC6 .> UC9 : <<include>>
+UC6 .> UC10 : <<include>>
+
+@enduml

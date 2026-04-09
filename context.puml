@@ -1,0 +1,23 @@
+@startuml
+left to right direction
+skinparam shadowing false
+skinparam defaultTextAlignment center
+
+rectangle "Kandydat" as Kandydat
+rectangle "Rekruter" as Rekruter
+rectangle "Klient" as Klient
+
+rectangle "System\nrekrutacyjny HR" as System
+
+rectangle "Google Calendar API" as GCal
+rectangle "CRM firmy HR" as CRM
+rectangle "System poczty e-mail" as Mail
+
+Kandydat -- System
+Rekruter -- System
+Klient -- System
+
+System -- GCal
+System -- CRM
+System -- Mail
+@enduml
