@@ -1,0 +1,55 @@
+@startuml
+left to right direction
+skinparam shadowing false
+skinparam defaultTextAlignment center
+skinparam linetype ortho
+
+skinparam rectangle {
+  RoundCorner 15
+}
+
+actor Kandydat
+actor Rekruter
+actor Klient
+
+rectangle "Google Calendar API" as GCal
+rectangle "System poczty e-mail" as Mail
+
+rectangle "3.1\nUdostępnienie listy" as P31 #FFF0D9
+rectangle "3.2\nZapis opinii klienta" as P32 #FFF0D9
+rectangle "3.3\nPrzygotowanie rozmowy" as P33 #FFF0D9
+rectangle "3.4\nSynchronizacja terminu" as P34 #FFF0D9
+rectangle "3.5\nObsługa potwierdzeń" as P35 #FFF0D9
+
+database "D4\nListy kandydatów" as D4
+database "D5\nRozmowy" as D5
+database "D6\nOpinie klientów" as D6
+
+Rekruter --> P31 : id rekrutacji
+D4 --> P31 : lista kandydatów
+P31 --> Klient : lista kandydatów
+
+Klient --> P32 : decyzja klienta
+P32 --> D6 : opinia klienta
+P32 --> Rekruter : opinia klienta
+
+D4 --> P33 : lista kandydatów
+D6 --> P33 : opinia klienta
+Rekruter --> P33 : dane rozmowy
+P33 --> P34 : propozycja terminu
+
+P34 --> GCal : dane spotkania
+GCal --> P34 : terminy
+P34 --> D5 : rozmowa
+P34 --> P35 : zaproszenie
+
+D5 --> P35 : rozmowa
+P35 --> Mail : wiadomość
+Mail --> P35 : status wysyłki
+Kandydat --> P35 : odpowiedź terminu
+Klient --> P35 : odpowiedź terminu
+P35 --> D5 : status rozmowy
+P35 --> Rekruter : status rozmowy
+P35 --> Kandydat : potwierdzenie
+P35 --> Klient : potwierdzenie
+@enduml

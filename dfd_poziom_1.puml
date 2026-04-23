@@ -1,0 +1,79 @@
+@startuml
+top to bottom direction
+skinparam shadowing false
+skinparam defaultTextAlignment center
+skinparam linetype ortho
+skinparam nodesep 60
+skinparam ranksep 90
+
+skinparam rectangle {
+  RoundCorner 15
+}
+
+actor Kandydat
+actor Rekruter
+actor Klient
+
+rectangle "CRM firmy HR" as CRM
+rectangle "Google Calendar API" as GCal
+rectangle "System poczty e-mail" as Mail
+
+rectangle "1\nObsługa ofert\ni aplikacji" as P1 #DDEEFF
+rectangle "2\nSelekcja\nkandydatów" as P2 #E5F4E3
+rectangle "3\nObsługa rozmów\ni decyzji\nklienta" as P3 #FFF0D9
+
+database "D1\nOferty" as D1
+database "D2\nAplikacje" as D2
+database "D3\nRankingi" as D3
+database "D4\nListy kandydatów" as D4
+database "D5\nRozmowy" as D5
+
+Kandydat -[hidden]down-> Rekruter
+Rekruter -[hidden]down-> Klient
+
+P1 -[hidden]down-> P2
+P2 -[hidden]down-> P3
+
+CRM -[hidden]down-> GCal
+GCal -[hidden]down-> Mail
+
+Kandydat -[hidden]right-> P1
+Rekruter -[hidden]right-> P2
+Klient -[hidden]right-> P3
+
+P1 -[hidden]right-> CRM
+P2 -[hidden]right-> GCal
+P3 -[hidden]right-> Mail
+
+D1 -[hidden]right-> D2
+D2 -[hidden]right-> D3
+D3 -[hidden]right-> D4
+D4 -[hidden]right-> D5
+
+P1 -[hidden]down-> D1
+P2 -[hidden]down-> D3
+P3 -[hidden]down-> D5
+
+Rekruter --> P1 : dane oferty
+P1 --> CRM : zapytanie oferty
+CRM --> P1 : dane oferty
+Kandydat --> P1 : dane aplikacji
+P1 --> D1 : oferta
+P1 --> D2 : aplikacja
+
+Rekruter --> P2 : kryteria selekcji
+D1 --> P2 : oferta
+D2 --> P2 : aplikacje
+P2 --> Rekruter : ranking
+P2 --> D3 : ranking
+P2 --> D4 : lista kandydatów
+
+Rekruter --> P3 : dane rozmowy
+Klient --> P3 : decyzja klienta
+D4 --> P3 : lista kandydatów
+P3 --> Klient : lista kandydatów
+P3 --> GCal : dane spotkania
+GCal --> P3 : terminy
+P3 --> Mail : wiadomość
+P3 --> D5 : rozmowa
+@enduml

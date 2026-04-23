@@ -1,0 +1,43 @@
+@startuml
+left to right direction
+skinparam shadowing false
+skinparam defaultTextAlignment center
+skinparam linetype ortho
+
+skinparam rectangle {
+  RoundCorner 15
+}
+
+actor Rekruter
+
+rectangle "2.1\nPobranie danych\nselekcji" as P21 #E5F4E3
+rectangle "2.2\nOdczyt treści CV" as P22 #E5F4E3
+rectangle "2.3\nOcena dopasowania AI" as P23 #E5F4E3
+rectangle "2.4\nUtworzenie rankingu" as P24 #E5F4E3
+rectangle "2.5\nZatwierdzenie listy" as P25 #E5F4E3
+
+database "D1\nOferty" as D1
+database "D2\nAplikacje" as D2
+database "D3\nRankingi" as D3
+database "D4\nListy kandydatów" as D4
+database "D7\nWyniki analiz" as D7
+
+Rekruter --> P21 : kryteria selekcji
+D1 --> P21 : oferta
+D2 --> P21 : aplikacje
+P21 --> P22 : CV
+P21 --> P23 : kryteria
+
+P22 --> P23 : profile
+
+P23 --> D7 : wynik analizy
+
+D7 --> P24 : wyniki analiz
+P24 --> Rekruter : ranking
+P24 --> D3 : ranking
+
+D3 --> P25 : ranking
+
+P25 --> D4 : lista kandydatów
+P25 --> Rekruter : potwierdzenie
+@enduml
