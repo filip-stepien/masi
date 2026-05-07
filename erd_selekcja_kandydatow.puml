@@ -1,0 +1,114 @@
+@startuml
+left to right direction
+skinparam shadowing false
+skinparam linetype ortho
+skinparam defaultTextAlignment center
+hide circle
+
+entity "Oferta" as Oferta {
+  * id_oferty : int <<PK>>
+  --
+  tytul_stanowiska : varchar
+  wymagania : text
+  status_oferty : varchar
+}
+
+entity "Kryteria selekcji" as Kryteria {
+  * id_oferty : int <<PK, FK>>
+  --
+  wymagane_umiejetnosci : text
+  wymagane_doswiadczenie : text
+  wymagane_wyksztalcenie : text
+  jezyki_obce : text
+  dostepnosc : varchar
+  oczekiwania_finansowe : varchar
+}
+
+entity "Aplikacja" as Aplikacja {
+  * id_aplikacji : int <<PK>>
+  --
+  id_kandydata : int <<FK>>
+  id_oferty : int <<FK>>
+  id_cv : int <<FK>>
+  status_aplikacji : varchar
+  komentarz_rekrutera : text
+}
+
+entity "Wynik analizy" as WynikAnalizy {
+  * id_analizy : int <<PK>>
+  --
+  id_aplikacji : int <<FK>>
+  wynik_punktowy : decimal
+  poziom_dopasowania : varchar
+  spelnione_kryteria : text
+  niespelnione_kryteria : text
+  rekomendacja : varchar
+  uzasadnienie : text
+  data_analizy : datetime
+}
+
+entity "Ranking" as Ranking {
+  * id_rankingu : int <<PK>>
+  --
+  id_oferty : int <<FK>>
+  data_utworzenia : datetime
+  status_rankingu : varchar
+}
+
+entity "Pozycja rankingu" as PozycjaRankingu {
+  * id_pozycji_rankingu : int <<PK>>
+  --
+  id_rankingu : int <<FK>>
+  id_analizy : int <<FK>>
+  numer_pozycji : int
+  wynik_punktowy : decimal
+  poziom_dopasowania : varchar
+  komentarz : text
+}
+
+entity "Klient" as Klient {
+  * id_klienta : int <<PK>>
+  --
+  nazwa : varchar
+}
+
+entity "Rekruter" as Rekruter {
+  * id_rekrutera : int <<PK>>
+  --
+  imie : varchar
+  nazwisko : varchar
+}
+
+entity "Lista kandydatów" as ListaKandydatow {
+  * id_listy : int <<PK>>
+  --
+  id_oferty : int <<FK>>
+  id_klienta : int <<FK>>
+  id_rekrutera : int <<FK>>
+  data_utworzenia : datetime
+  status_listy : varchar
+}
+
+entity "Kandydat na liście" as KandydatNaLiscie {
+  * id_pozycji_listy : int <<PK>>
+  --
+  id_listy : int <<FK>>
+  id_aplikacji : int <<FK>>
+  stanowisko : varchar
+  wynik_dopasowania : decimal
+  notatka_rekrutera : text
+}
+
+Oferta ||--|| Kryteria : dostarcza
+Oferta ||--o{ Aplikacja : ma
+Aplikacja ||--o{ WynikAnalizy : oceniana_w
+Oferta ||--o{ Ranking : ma
+Ranking ||--|{ PozycjaRankingu : zawiera
+WynikAnalizy ||--o{ PozycjaRankingu : zasila
+Oferta ||--o{ ListaKandydatow : ma
+Klient ||--o{ ListaKandydatow : otrzymuje
+Rekruter ||--o{ ListaKandydatow : zatwierdza
+ListaKandydatow ||--|{ KandydatNaLiscie : zawiera
+Aplikacja ||--o{ KandydatNaLiscie : wybrana_do
+
+@enduml

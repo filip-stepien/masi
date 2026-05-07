@@ -1,0 +1,143 @@
+@startuml
+left to right direction
+skinparam shadowing false
+skinparam linetype ortho
+skinparam defaultTextAlignment center
+hide circle
+
+entity "Klient" as Klient {
+  * id_klienta : int <<PK>>
+  --
+  nazwa : varchar
+  osoba_kontaktowa : varchar
+  email : varchar
+  telefon : varchar
+  status_klienta : varchar
+}
+
+entity "Rekruter" as Rekruter {
+  * id_rekrutera : int <<PK>>
+  --
+  imie : varchar
+  nazwisko : varchar
+  email : varchar
+  telefon : varchar
+}
+
+entity "Oferta" as Oferta {
+  * id_oferty : int <<PK>>
+  --
+  id_klienta : int <<FK>>
+  id_rekrutera : int <<FK>>
+  tytul_stanowiska : varchar
+  opis_stanowiska : text
+  wymagania : text
+  obowiazki : text
+  lokalizacja : varchar
+  tryb_pracy : varchar
+  forma_zatrudnienia : varchar
+  widelki_wynagrodzenia : varchar
+  status_oferty : varchar
+  data_utworzenia : date
+  termin_waznosci : date
+}
+
+entity "Kryteria selekcji" as Kryteria {
+  * id_oferty : int <<PK, FK>>
+  --
+  wymagane_umiejetnosci : text
+  wymagane_doswiadczenie : text
+  wymagane_wyksztalcenie : text
+  jezyki_obce : text
+  dostepnosc : varchar
+  oczekiwania_finansowe : varchar
+}
+
+entity "Kandydat" as Kandydat {
+  * id_kandydata : int <<PK>>
+  --
+  imie : varchar
+  nazwisko : varchar
+  email : varchar
+  telefon : varchar
+  lokalizacja : varchar
+  doswiadczenie_zawodowe : text
+  umiejetnosci : text
+  wyksztalcenie : text
+}
+
+entity "CV" as CV {
+  * id_cv : int <<PK>>
+  --
+  id_kandydata : int <<FK>>
+  plik_cv : varchar
+  nazwa_pliku : varchar
+  format_pliku : varchar
+  data_przeslania : date
+  tresc_cv : text
+  doswiadczenie : text
+  umiejetnosci : text
+  wyksztalcenie : text
+}
+
+entity "Aplikacja" as Aplikacja {
+  * id_aplikacji : int <<PK>>
+  --
+  id_kandydata : int <<FK>>
+  id_oferty : int <<FK>>
+  id_cv : int <<FK>>
+  data_zgloszenia : datetime
+  status_aplikacji : varchar
+  wynik_wstepnej_oceny : decimal
+  komentarz_rekrutera : text
+  list_motywacyjny : text
+}
+
+entity "Wiadomość" as Wiadomosc {
+  * id_wiadomosci : int <<PK>>
+  --
+  id_aplikacji : int <<FK>>
+  nadawca : varchar
+  odbiorca : varchar
+  temat : varchar
+  tresc : text
+  data_wyslania : datetime
+  kanal_komunikacji : varchar
+  zalaczniki : text
+  aktualny_status_wysylki : varchar
+}
+
+entity "Status wysyłki" as StatusWysylki {
+  * id_statusu_wysylki : int <<PK>>
+  --
+  id_wiadomosci : int <<FK>>
+  status : varchar
+  data_zmiany_statusu : datetime
+  odbiorca : varchar
+}
+
+entity "Potwierdzenie" as Potwierdzenie {
+  * id_potwierdzenia : int <<PK>>
+  --
+  id_aplikacji : int <<FK>>
+  typ_potwierdzenia : varchar
+  decyzja : varchar
+  data_potwierdzenia : datetime
+  osoba_potwierdzajaca : varchar
+  rola_potwierdzajacego : varchar
+  komentarz : text
+}
+
+Klient ||--o{ Oferta : zleca
+Rekruter ||--o{ Oferta : odpowiada_za
+Oferta ||--|| Kryteria : ma
+Kandydat ||--o{ CV : posiada
+Kandydat ||--o{ Aplikacja : sklada
+Oferta ||--o{ Aplikacja : przyjmuje
+CV ||--o{ Aplikacja : zalaczony_do
+Aplikacja ||--o{ Wiadomosc : powoduje_potwierdzenie
+Wiadomosc ||--o{ StatusWysylki : ma_historie
+Aplikacja ||--o{ Potwierdzenie : ma
+Kandydat ||--o{ Potwierdzenie : sklada
+
+@enduml

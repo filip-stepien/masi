@@ -1,0 +1,212 @@
+@startuml
+left to right direction
+skinparam shadowing false
+skinparam linetype ortho
+skinparam defaultTextAlignment center
+hide circle
+
+entity "Klient" as Klient {
+  * id_klienta : int <<PK>>
+  --
+  nazwa : varchar
+  osoba_kontaktowa : varchar
+  email : varchar
+  telefon : varchar
+}
+
+entity "Rekruter" as Rekruter {
+  * id_rekrutera : int <<PK>>
+  --
+  imie : varchar
+  nazwisko : varchar
+  email : varchar
+}
+
+entity "Kandydat" as Kandydat {
+  * id_kandydata : int <<PK>>
+  --
+  imie : varchar
+  nazwisko : varchar
+  email : varchar
+  telefon : varchar
+}
+
+entity "Oferta" as Oferta {
+  * id_oferty : int <<PK>>
+  --
+  tytul_stanowiska : varchar
+  status_oferty : varchar
+}
+
+entity "Lista kandydatów" as ListaKandydatow {
+  * id_listy : int <<PK>>
+  --
+  id_oferty : int <<FK>>
+  id_klienta : int <<FK>>
+  id_rekrutera : int <<FK>>
+  data_utworzenia : datetime
+  status_listy : varchar
+}
+
+entity "Kandydat na liście" as KandydatNaLiscie {
+  * id_pozycji_listy : int <<PK>>
+  --
+  id_listy : int <<FK>>
+  id_aplikacji : int <<FK>>
+  stanowisko : varchar
+  wynik_dopasowania : decimal
+  notatka_rekrutera : text
+}
+
+entity "Decyzja klienta" as DecyzjaKlienta {
+  * id_decyzji : int <<PK>>
+  --
+  id_pozycji_listy : int <<FK>>
+  id_klienta : int <<FK>>
+  decyzja : varchar
+  uzasadnienie : text
+  data_decyzji : datetime
+  osoba_decyzyjna : varchar
+}
+
+entity "Opinia klienta" as OpiniaKlienta {
+  * id_opinii : int <<PK>>
+  --
+  id_pozycji_listy : int <<FK>>
+  id_klienta : int <<FK>>
+  ocena_kandydata : varchar
+  komentarz_klienta : text
+  mocne_strony : text
+  slabe_strony : text
+  rekomendacja_klienta : varchar
+  data_opinii : datetime
+}
+
+entity "Rozmowa" as Rozmowa {
+  * id_rozmowy : int <<PK>>
+  --
+  id_pozycji_listy : int <<FK>>
+  id_kandydata : int <<FK>>
+  id_klienta : int <<FK>>
+  id_rekrutera : int <<FK>>
+  id_oferty : int <<FK>>
+  forma_rozmowy : varchar
+  lokalizacja_lub_link : varchar
+  status_rozmowy : varchar
+  wynik_rozmowy : varchar
+  notatki : text
+}
+
+entity "Propozycja terminu" as PropozycjaTerminu {
+  * id_propozycji : int <<PK>>
+  --
+  id_rozmowy : int <<FK>>
+  proponowana_data : date
+  godzina_rozpoczecia : time
+  godzina_zakonczenia : time
+  strefa_czasowa : varchar
+  proponujacy : varchar
+  status_propozycji : varchar
+}
+
+entity "Termin" as Termin {
+  * id_terminu : int <<PK>>
+  --
+  id_rozmowy : int <<FK>>
+  data : date
+  godzina_rozpoczecia : time
+  godzina_zakonczenia : time
+  strefa_czasowa : varchar
+  lokalizacja_lub_link : varchar
+  status_terminu : varchar
+}
+
+entity "Spotkanie kalendarza" as SpotkanieKalendarza {
+  * id_spotkania : int <<PK>>
+  --
+  id_rozmowy : int <<FK>>
+  id_terminu : int <<FK>>
+  tytul_spotkania : varchar
+  opis_spotkania : text
+  przypomnienia : text
+  status_spotkania : varchar
+}
+
+entity "Zaproszenie" as Zaproszenie {
+  * id_zaproszenia : int <<PK>>
+  --
+  id_rozmowy : int <<FK>>
+  id_terminu : int <<FK>>
+  nadawca : varchar
+  odbiorcy : text
+  temat : varchar
+  tresc_wiadomosci : text
+  status_wysylki : varchar
+}
+
+entity "Wiadomość" as Wiadomosc {
+  * id_wiadomosci : int <<PK>>
+  --
+  id_zaproszenia : int <<FK>>
+  nadawca : varchar
+  odbiorca : varchar
+  temat : varchar
+  tresc : text
+  data_wyslania : datetime
+  kanal_komunikacji : varchar
+  zalaczniki : text
+  aktualny_status_wysylki : varchar
+}
+
+entity "Status wysyłki" as StatusWysylki {
+  * id_statusu_wysylki : int <<PK>>
+  --
+  id_wiadomosci : int <<FK>>
+  status : varchar
+  data_zmiany_statusu : datetime
+  odbiorca : varchar
+}
+
+entity "Potwierdzenie" as Potwierdzenie {
+  * id_potwierdzenia : int <<PK>>
+  --
+  id_aplikacji : int <<FK>>
+  id_rozmowy : int <<FK>>
+  typ_potwierdzenia : varchar
+  decyzja : varchar
+  data_potwierdzenia : datetime
+  osoba_potwierdzajaca : varchar
+  rola_potwierdzajacego : varchar
+  komentarz : text
+}
+
+Oferta ||--o{ ListaKandydatow : ma
+Klient ||--o{ ListaKandydatow : otrzymuje
+Rekruter ||--o{ ListaKandydatow : przygotowuje
+ListaKandydatow ||--|{ KandydatNaLiscie : zawiera
+KandydatNaLiscie ||--o{ DecyzjaKlienta : ma
+Klient ||--o{ DecyzjaKlienta : podejmuje
+KandydatNaLiscie ||--o{ OpiniaKlienta : ma
+Klient ||--o{ OpiniaKlienta : wystawia
+KandydatNaLiscie ||--o{ Rozmowa : prowadzi_do
+Kandydat ||--o{ Rozmowa : uczestniczy_w
+Klient ||--o{ Rozmowa : uczestniczy_w
+Rekruter ||--o{ Rozmowa : planuje
+Oferta ||--o{ Rozmowa : dotyczy
+Rozmowa ||--o{ PropozycjaTerminu : ma
+Rozmowa ||--o| Termin : ma_potwierdzony
+Rozmowa ||--o| SpotkanieKalendarza : synchronizuje
+Termin ||--o| SpotkanieKalendarza : okresla
+Rozmowa ||--o{ Zaproszenie : generuje
+Termin ||--o{ Zaproszenie : wskazuje
+Zaproszenie ||--o{ Wiadomosc : wysylane_jako
+Wiadomosc ||--o{ StatusWysylki : ma_historie
+Rozmowa ||--o{ Potwierdzenie : ma
+Kandydat ||--o{ Potwierdzenie : sklada
+Klient ||--o{ Potwierdzenie : sklada
+
+note bottom of Potwierdzenie
+  Potwierdzenie składa kandydat albo klient.
+end note
+
+@enduml
