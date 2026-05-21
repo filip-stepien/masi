@@ -1,0 +1,119 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Diagram aktywnosci AI" id="diagram-aktywnosci-ai">
+    <mxGraphModel dx="1034" dy="1890" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="900" pageHeight="1900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="start" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="435" y="30" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="a1" value="Rekruter: wybiera oferte i uruchamia analize CV" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="330" y="90" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="a2" value="System: pobiera oferte, kryteria selekcji i aplikacje" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="330" y="180" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="d1" value="Czy sa aplikacje do analizy?" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="380" y="270" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="aNoApps" value="System: informuje rekrutera o braku aplikacji" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="630" y="285" width="210" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="a3" value="System: pobiera CV kandydata" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="330" y="400" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="a4" value="System: odczytuje i normalizuje tresc CV" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="330" y="490" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="d2" value="Czy CV odczytano poprawnie?" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="380" y="580" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="aBadCv" value="System: oznacza aplikacje do recznego odczytu CV" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="60" y="595" width="220" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="a5" value="System: buduje profil kandydata i sprawdza dostepnosc AI" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="330" y="710" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="d3" value="Czy usluga AI jest dostepna?" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="380" y="800" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="aNoAi" value="System: oznacza aplikacje do analizy recznej i ponowienia pozniej" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="630" y="815" width="220" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="a6" value="Modul AI: porownuje profil z kryteriami i wylicza ocene dopasowania" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="330" y="930" width="240" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="a7" value="System: zapisuje wynik analizy z rekomendacja" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="330" y="1030" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="d4" value="Niski poziom pewnosci?" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="380" y="1120" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="aVerify" value="System: oznacza wynik do weryfikacji rekrutera" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="60" y="1135" width="220" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="aReady" value="System: oznacza wynik jako gotowy" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="630" y="1135" width="220" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="dLoop" value="Czy sa kolejne aplikacje?" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="380" y="1240" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="aRanking" value="System: sortuje wyniki, tworzy i zapisuje ranking" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="330" y="1380" width="240" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="aReview" value="Rekruter: przeglada ranking i weryfikuje rekomendacje AI" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="330" y="1480" width="240" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="d5" value="Czy ranking wymaga korekty?" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="380" y="1580" width="140" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="aCorrect" value="Rekruter/System: korekta wyboru lub komentarzy i aktualizacja rankingu" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="60" y="1595" width="240" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="aApprove" value="Rekruter: zatwierdza ranking do utworzenia listy kandydatow" style="rounded=1;whiteSpace=wrap;html=1;arcSize=12;" vertex="1" parent="1">
+          <mxGeometry x="330" y="1720" width="240" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="end" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;strokeWidth=3;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="435" y="1830" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="start" target="a1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="a1" target="a2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e3" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="a2" target="d1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e4" value="tak" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="d1" target="a3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e5" value="nie" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="d1" target="aNoApps"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="a3" target="a4"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="a4" target="d2"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e8" value="tak" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="d2" target="a5"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e9" value="nie" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="d2" target="aBadCv"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e10" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="a5" target="d3"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e11" value="tak" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="d3" target="a6"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e12" value="nie" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="d3" target="aNoAi"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="a6" target="a7"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e14" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="a7" target="d4"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e15" value="tak" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="d4" target="aVerify"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e16" value="nie" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="d4" target="aReady"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e17" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="aVerify" target="dLoop"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e18" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="aReady" target="dLoop"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e19" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="aBadCv" target="dLoop"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e20" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="aNoAi" target="dLoop"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e21" value="tak" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="dLoop" target="a3">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="700" y="1285" /><mxPoint x="700" y="430" /></Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e22" value="nie" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="dLoop" target="aRanking"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e23" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="aRanking" target="aReview"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e24" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="aReview" target="d5"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e25" value="tak" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="d5" target="aCorrect"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e26" value="nie" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="d5" target="aApprove"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e27" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="aCorrect" target="aApprove"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e28" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="aApprove" target="end"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e29" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;endFill=1;" edge="1" parent="1" source="aNoApps" target="end">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points"><mxPoint x="870" y="315" /><mxPoint x="870" y="1845" /></Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,269 @@
+@startuml
+title Diagram klas - system wspomagajacy proces rekrutacji HR
+
+left to right direction
+skinparam shadowing false
+skinparam linetype ortho
+skinparam classAttributeIconSize 0
+skinparam packageStyle rectangle
+hide empty members
+
+package "Uczestnicy procesu" {
+  abstract class OsobaSystemu {
+    -id: int
+    -imie: string
+    -nazwisko: string
+    -email: string
+    -telefon: string
+    +aktualizujDane(): void
+  }
+
+  class Kandydat {
+    -lokalizacja: string
+    -doswiadczenieZawodowe: text
+    -umiejetnosci: text
+    -wyksztalcenie: text
+    +zlozAplikacje(oferta: Oferta, cv: CV): Aplikacja
+    +potwierdzTermin(rozmowa: Rozmowa): Potwierdzenie
+  }
+
+  class Rekruter {
+    +utworzOferte(klient: Klient): Oferta
+    +uruchomAnalize(oferta: Oferta): Ranking
+    +zatwierdzListe(lista: ListaKandydatow): void
+    +zaplanujRozmowe(kandydat: KandydatNaLiscie): Rozmowa
+  }
+
+  class Klient {
+    -idKlienta: int
+    -nazwa: string
+    -osobaKontaktowa: string
+    -email: string
+    -telefon: string
+    -statusKlienta: string
+    +przejrzyjListe(lista: ListaKandydatow): void
+    +przekazDecyzje(kandydat: KandydatNaLiscie, decyzja: string): DecyzjaKlienta
+  }
+}
+
+package "Oferty i aplikacje" {
+  class Oferta {
+    -idOferty: int
+    -tytulStanowiska: string
+    -opisStanowiska: text
+    -wymagania: text
+    -lokalizacja: string
+    -trybPracy: string
+    -statusOferty: string
+    -dataUtworzenia: date
+    +opublikuj(): void
+    +zamknij(): void
+    +aktualizujZDanychCRM(): void
+  }
+
+  class KryteriaSelekcji {
+    -wymaganeUmiejetnosci: text
+    -wymaganeDoswiadczenie: text
+    -wymaganeWyksztalcenie: text
+    -jezykiObce: text
+    -dostepnosc: string
+    +sprawdzKompletnosc(): bool
+  }
+
+  class CV {
+    -idCv: int
+    -nazwaPliku: string
+    -formatPliku: string
+    -dataPrzeslania: date
+    -trescCv: text
+    +walidujFormat(): bool
+    +odczytajTresc(): text
+  }
+
+  class Aplikacja {
+    -idAplikacji: int
+    -dataZgloszenia: datetime
+    -statusAplikacji: string
+    -wynikWstepnejOceny: decimal
+    -komentarzRekrutera: text
+    +sprawdzKompletnosc(): bool
+    +oznaczDuplikat(): void
+    +zmienStatus(status: string): void
+  }
+}
+
+package "Analiza AI i ranking" {
+  class ProfilKandydata {
+    -idAplikacji: int
+    -umiejetnosci: text
+    -doswiadczenie: text
+    -wyksztalcenie: text
+    -slowaKluczowe: text
+  }
+
+  class AnalizatorCV <<service>> {
+    +przygotujProfil(cv: CV): ProfilKandydata
+    +porownajZKryteriami(profil: ProfilKandydata, kryteria: KryteriaSelekcji): WynikAnalizy
+    +oznaczDoWeryfikacji(wynik: WynikAnalizy): void
+  }
+
+  class ModelAI <<service>> {
+    -wersjaModelu: string
+    -progPewnosci: decimal
+    +ocenDopasowanie(profil: ProfilKandydata, kryteria: KryteriaSelekcji): WynikAnalizy
+    +trenujNaDanychHistorycznych(): void
+  }
+
+  class WynikAnalizy {
+    -idAnalizy: int
+    -wynikPunktowy: decimal
+    -poziomDopasowania: string
+    -poziomPewnosci: decimal
+    -rekomendacja: string
+    -uzasadnienie: text
+    -dataAnalizy: datetime
+    +czyWymagaWeryfikacji(): bool
+  }
+
+  class Ranking {
+    -idRankingu: int
+    -dataUtworzenia: datetime
+    -statusRankingu: string
+    +sortujPoWyniku(): void
+    +zatwierdz(): void
+  }
+
+  class PozycjaRankingu {
+    -numerPozycji: int
+    -wynikPunktowy: decimal
+    -poziomDopasowania: string
+    -komentarz: text
+  }
+}
+
+package "Listy, decyzje i rozmowy" {
+  class ListaKandydatow {
+    -idListy: int
+    -dataUtworzenia: datetime
+    -statusListy: string
+    +dodajKandydata(aplikacja: Aplikacja): void
+    +zatwierdz(): void
+  }
+
+  class KandydatNaLiscie {
+    -idPozycjiListy: int
+    -stanowisko: string
+    -wynikDopasowania: decimal
+    -notatkaRekrutera: text
+  }
+
+  class DecyzjaKlienta {
+    -idDecyzji: int
+    -decyzja: string
+    -uzasadnienie: text
+    -dataDecyzji: datetime
+    +zapisz(): void
+  }
+
+  class Rozmowa {
+    -idRozmowy: int
+    -formaRozmowy: string
+    -lokalizacjaLubLink: string
+    -statusRozmowy: string
+    -wynikRozmowy: string
+    +zaplanujTermin(termin: Termin): void
+    +zmienStatus(status: string): void
+  }
+
+  class Termin {
+    -data: date
+    -godzinaRozpoczecia: time
+    -godzinaZakonczenia: time
+    -strefaCzasowa: string
+    -statusTerminu: string
+    +czyDostepny(): bool
+  }
+
+  class Potwierdzenie {
+    -typPotwierdzenia: string
+    -decyzja: string
+    -dataPotwierdzenia: datetime
+    -rolaPotwierdzajacego: string
+  }
+
+  class Wiadomosc {
+    -odbiorca: string
+    -temat: string
+    -tresc: text
+    -dataWyslania: datetime
+    -aktualnyStatusWysylki: string
+    +wyslij(): void
+  }
+}
+
+package "Integracje zewnetrzne" {
+  interface CRMAdapter {
+    +pobierzKlienta(idKlienta: int): Klient
+    +pobierzOferty(): Oferta[]
+  }
+
+  interface CalendarAdapter {
+    +sprawdzDostepnosc(termin: Termin): bool
+    +utworzSpotkanie(rozmowa: Rozmowa): void
+  }
+
+  interface EmailAdapter {
+    +wyslij(wiadomosc: Wiadomosc): string
+  }
+}
+
+OsobaSystemu <|-- Kandydat
+OsobaSystemu <|-- Rekruter
+
+Klient "1" -- "0..*" Oferta : zleca
+Rekruter "1" -- "0..*" Oferta : prowadzi
+Oferta "1" *-- "1" KryteriaSelekcji : ma
+Oferta "1" -- "0..*" Aplikacja : przyjmuje
+Kandydat "1" *-- "0..*" CV : posiada
+Kandydat "1" -- "0..*" Aplikacja : sklada
+CV "1" -- "0..*" Aplikacja : zalaczony_do
+
+Aplikacja "1" -- "0..*" WynikAnalizy : ma
+Oferta "1" -- "0..*" Ranking : ma
+Ranking "1" *-- "1..*" PozycjaRankingu : zawiera
+PozycjaRankingu "1" --> "1" WynikAnalizy : opisuje
+
+Oferta "1" -- "0..*" ListaKandydatow : ma
+Klient "1" -- "0..*" ListaKandydatow : otrzymuje
+Rekruter "1" -- "0..*" ListaKandydatow : przygotowuje
+ListaKandydatow "1" *-- "1..*" KandydatNaLiscie : zawiera
+KandydatNaLiscie "1" --> "1" Aplikacja : dotyczy
+KandydatNaLiscie "1" -- "0..*" DecyzjaKlienta : ma
+KandydatNaLiscie "1" -- "0..*" Rozmowa : prowadzi_do
+
+Rozmowa "1" *-- "0..1" Termin : ma_potwierdzony
+Rozmowa "1" -- "0..*" Potwierdzenie : zbiera
+Rozmowa "1" -- "0..*" Wiadomosc : generuje
+Kandydat "1" -- "0..*" Potwierdzenie : sklada
+Klient "1" -- "0..*" Potwierdzenie : sklada
+
+Rekruter ..> AnalizatorCV : uruchamia
+AnalizatorCV ..> CV : odczytuje
+AnalizatorCV ..> KryteriaSelekcji : wykorzystuje
+AnalizatorCV ..> ModelAI : <<use>>
+AnalizatorCV ..> WynikAnalizy : <<create>>
+ModelAI ..> ProfilKandydata : analizuje
+
+CRMAdapter ..> Klient : pobiera
+CRMAdapter ..> Oferta : synchronizuje
+CalendarAdapter ..> Rozmowa : tworzy_spotkanie
+CalendarAdapter ..> Termin : sprawdza
+EmailAdapter ..> Wiadomosc : wysyla
+
+note right of AnalizatorCV
+  Klasa odpowiada za funkcjonalnosc
+  "Analiza i ranking CV z uzyciem AI"
+  opisana w specyfikacji wymagan.
+end note
+
+@enduml

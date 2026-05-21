@@ -1,0 +1,99 @@
+@startuml
+title Diagram aktywnosci - analiza i ranking CV z uzyciem AI
+
+skinparam shadowing false
+skinparam defaultTextAlignment center
+
+start
+
+partition "Rekruter" {
+  :Wybiera oferte rekrutacyjna;
+  :Uruchamia analize CV;
+}
+
+partition "System" {
+  :Pobiera oferte, kryteria selekcji i aplikacje;
+}
+
+if (Czy istnieja aplikacje do analizy?) then (tak)
+  while (Jest kolejna aplikacja?) is (tak)
+    partition "System" {
+      :Pobiera CV kandydata;
+      :Odczytuje i normalizuje tresc CV;
+    }
+
+    if (Czy CV odczytano poprawnie?) then (tak)
+      partition "System" {
+        :Buduje profil kandydata;
+        :Sprawdza dostepnosc uslugi AI;
+      }
+
+      if (Czy usluga AI jest dostepna?) then (tak)
+        partition "Modul AI" {
+          :Porownuje profil z kryteriami oferty;
+          :Wylicza ocene dopasowania;
+          :Tworzy rekomendacje i uzasadnienie;
+        }
+
+        partition "System" {
+          :Zapisuje wynik analizy;
+        }
+
+        if (Czy poziom pewnosci jest niski?) then (tak)
+          partition "System" {
+            :Oznacza wynik do weryfikacji rekrutera;
+          }
+        else (nie)
+          partition "System" {
+            :Oznacza wynik jako gotowy;
+          }
+        endif
+      else (nie)
+        partition "System" {
+          :Oznacza aplikacje do analizy recznej;
+          :Zapisuje mozliwosc ponowienia analizy;
+        }
+      endif
+    else (nie)
+      partition "System" {
+        :Oznacza aplikacje do recznego odczytu CV;
+      }
+    endif
+  endwhile (nie)
+
+  partition "System" {
+    :Sortuje wyniki wedlug oceny dopasowania;
+    :Tworzy ranking kandydatow dla oferty;
+    :Zapisuje ranking;
+  }
+
+  partition "Rekruter" {
+    :Przeglada ranking i oznaczenia ryzyka;
+    :Weryfikuje rekomendacje AI;
+  }
+
+  if (Czy ranking wymaga korekty?) then (tak)
+    partition "Rekruter" {
+      :Koryguje wybor kandydatow lub komentarze;
+    }
+    partition "System" {
+      :Aktualizuje ranking;
+    }
+  else (nie)
+    partition "Rekruter" {
+      :Pozostawia ranking bez zmian;
+    }
+  endif
+
+  partition "Rekruter" {
+    :Zatwierdza ranking do utworzenia listy kandydatow;
+  }
+else (nie)
+  partition "System" {
+    :Informuje rekrutera o braku aplikacji;
+  }
+endif
+
+stop
+
+@enduml
